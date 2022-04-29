@@ -9,7 +9,9 @@ services:
     volumes:
       - ./source:/app
       - /home/david/.ssh:/root/.ssh
+    ports:
+      - 9001:80
     environment:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_DEFAULT_REGION: eu-west-1
+      AWS_DEFAULT_REGION: eu-west-3

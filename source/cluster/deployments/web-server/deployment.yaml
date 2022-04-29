@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservicio-a-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+      micro: a
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        resources: 
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservicio-b-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+      micro: b
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        resources: 
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80

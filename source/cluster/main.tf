@@ -24,7 +24,7 @@ module "eks" {
     ]
   }
 
-  self_managed_node_groups = {
+    self_managed_node_groups = {
     one = {
       name         = "mixed-1"
       max_size     = 5
@@ -52,17 +52,40 @@ module "eks" {
     }
   }
 
+
+  # aws-auth configmap
+  manage_aws_auth_configmap = true
+  create_aws_auth_configmap = true 
+
+
+  aws_auth_roles = [
+    {
+      rolearn  = "arn:aws:iam::800789335147:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
+      username = "AWSServiceRoleForAmazonEKS"
+      groups   = ["system:masters"]
+    },
+  ]
+
+
 }
 
 
 
 
 
-data "aws_eks_cluster" "cluster" {
+
+
+
+data "aws_eks_cluster" "default" {
   name = module.eks.cluster_id
 }
 
-data "aws_eks_cluster_auth" "cluster" {
+data "aws_eks_cluster_auth" "default" {
   name = module.eks.cluster_id
 }
 
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.default.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.default.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.default.token
+}

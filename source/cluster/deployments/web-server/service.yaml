@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: a-service
+spec:
+  selector:
+    app: nginx
+    micro: a
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: b-service
+spec:
+  selector:
+    app: nginx
+    micro: b
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80      

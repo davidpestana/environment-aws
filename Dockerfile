@@ -29,6 +29,13 @@ RUN yum -y install git
 # INSTALL TERRAFORM
 RUN yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 RUN yum -y install terraform-0.14.5-1
+
+#INSTALL TERRAFORM-DOCS
+RUN curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz \
+&& tar -xzf terraform-docs.tar.gz \
+&& chmod +x terraform-docs \
+&& mv terraform-docs /usr/local/bin/terraform-docs
+
 # INSTALL TERRAGRUNT
 RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.32.5/terragrunt_linux_amd64 \
     && mv terragrunt_linux_amd64 /usr/local/bin/terragrunt \

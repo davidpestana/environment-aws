@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mesh
+  anottation: ingess-nginx
+spec:
+  rules:
+  - host: "foo.bar.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/images"
+        backend:
+          service:
+            name: service-a
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/users"
+        backend:
+          service:
+            name: service-b
+            port:
+              number: 80
